@@ -1,30 +1,16 @@
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
-import { useNavigation } from "@react-navigation/native";
- import { signInWithEmailAndPassword } from 'firebase/auth';
- import { auth } from '../firebase'
+import { useNavigation } from '@react-navigation/native'
 
 
-const LoginPage = () => {
+const LoginPage = ({ navigation, handleLogin }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const navigation = useNavigation()
-
 
     const handleLoginPress = async () => {
-        try {
-            const userCredentials = await signInWithEmailAndPassword(auth, email, password)
-            console.log('login succesfully');
-            navigation.navigate('HomePage')
-            setEmail();
-            setPassword();
-        }
-
-        catch (error) {
-
-            console.error(error);
-            showLoginError(error);
-        };
+        handleLogin(email, password);
+        setEmail();
+        setPassword();
     }
 
 

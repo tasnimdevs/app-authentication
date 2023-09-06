@@ -1,27 +1,32 @@
+import React, { useState } from 'react';
+import AppNavigator from './AppNavigator';
+ import { signInWithEmailAndPassword } from 'firebase/auth';
+ import { auth } from './firebase'
+import { useNavigation } from '@react-navigation/native';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import LoginPage from './layout/LoginPage';
-import HomePage from './layout/HomePage';
-import SignupPage from './layout/SignupPage';
-import ForgotPassPage from './layout/ForgotPassPage';
-
-
-const Stack = createNativeStackNavigator();
 
 export default function App() {
-  return (
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const navigation = useNavigation()
+  
+  const handleLogin = async (email, password) => {
 
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen options={{ headerShown: false }} name="LoginPage" component={LoginPage} />
-        <Stack.Screen name="HomePage" component={HomePage} />
-        <Stack.Screen name="SignupPage" component={SignupPage} />
-        <Stack.Screen name="ForgotPassPage" component={ForgotPassPage} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    try {
+      const userCredentials = await signInWithEmailAndPassword(auth, email, password)
+      console.log('login succesfully');
+      // navigation.navigate('HomePage')
+      setIsAuthenticated(true);
+    }
 
-  );
+    catch (error) {
+
+      console.error(error);
+      showLoginError(error);
+      alert("Incorrect Email or Password")
+    };
+
+  };
+  return <AppNavigator isAuthenticated={isAuthenticated} handleLogin={handleLogin} />
 }
 
 
