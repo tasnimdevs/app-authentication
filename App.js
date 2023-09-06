@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import AppNavigator from './AppNavigator';
- import { signInWithEmailAndPassword } from 'firebase/auth';
- import { auth } from './firebase'
-import { useNavigation } from '@react-navigation/native';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from './firebase'
+import 'react-native-gesture-handler';
+
+
 
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   // const navigation = useNavigation()
-  
+
   const handleLogin = async (email, password) => {
 
     try {

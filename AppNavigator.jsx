@@ -6,6 +6,7 @@ import LoginPage from './layout/LoginPage';
 import HomePage from './layout/HomePage';
 import SignupPage from './layout/SignupPage';
 import ForgotPassPage from './layout/ForgotPassPage';
+import CategoryPage from './layout/CategoryPage';
 
 
 
