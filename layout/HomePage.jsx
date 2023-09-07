@@ -4,14 +4,20 @@ import { useNavigation } from '@react-navigation/native';
 import { db } from '../firebase'
 import { ref, set, get } from 'firebase/database'
 import 'react-native-get-random-values';
-import { v4 as uuidv4 } from 'uuid'; 
+import { v4 as uuidv4 } from 'uuid';
 
 
-  
-export default function HomePage() {
+
+export default function HomePage({ route }) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [textValue, setTextValue] = useState('');
     const [cates, setCates] = useState([]);
+    // const { credentials } = route.params;
+
+    const navigation = useNavigation();
+
+    console.log('homescreen: ', route);
+
 
     const toSnakeCase = (str = '') => {
         str = str.trim();
@@ -24,7 +30,7 @@ export default function HomePage() {
 
     // console.log(totalBalance);
 
-    const navigation = useNavigation();
+  
 
     const handleOpenModal = () => {
         setIsModalVisible(true);
@@ -35,8 +41,9 @@ export default function HomePage() {
     };
 
     const handleSaveModal = () => {
-        set(ref(db, 'category/' + toSnakeCase(textValue)), {
-            id: uuidv4(),
+        const newId = uuidv4();
+        set(ref(db, 'category/' + toSnakeCase(newId)), {
+            id: newId,
             title: textValue,
         });
         // Do something with textValue and numberValue
@@ -47,9 +54,14 @@ export default function HomePage() {
     };
 
     const handleListItemPress = (categoryName) => {
-        navigation.navigate('CatePage', { categoryName });
+        navigation.navigate('CategoryPage', { categoryName });
         // Navigate to the new component and pass data
     };
+
+    useEffect(() => {
+        // console.log(route);
+    });
+    
 
     useEffect(() => {
         let itemsRef = ref(db, 'category');
@@ -68,10 +80,11 @@ export default function HomePage() {
                 // console.error("Error retrieving data:", error);
             });
 
-    }, [cates])
+    }, [])
 
     return (
         <>
+
             <View className="bg-orange-300 flex-1">
                 <ScrollView className="bg-gray-300">
                     <View className="flex m-10">

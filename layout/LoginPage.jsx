@@ -9,26 +9,25 @@ const LoginPage = ({ navigation, handleLogin }) => {
 
     const handleLoginPress = async () => {
         handleLogin(email, password);
-        setEmail();
-        setPassword();
     }
 
 
     return (
-        <View className="flex-1 items-center justify-center">
+        <View className="flex-1 items-center justify-center bg-slate-100">
             <View className="space-y-4  w-1/2 items-center">
                 <View className="w-full ">
                     <TextInput
-                        className="border px-3 py-2"
+                        className="border px-3 py-2 bg-white border-slate-400 "
                         placeholder="Email"
                         placeholderTextColor="#003f5c"
                         value={email}
                         onChangeText={(text) => setEmail(text)}
+                        autoCapitalize='none'
                     />
                 </View>
                 <View className="w-full">
                     <TextInput
-                        className="border px-3 py-2"
+                        className="border px-3 py-2 bg-white border-slate-400"
                         placeholder="Password"
                         placeholderTextColor="#003f5c"
                         value={password}
@@ -37,7 +36,7 @@ const LoginPage = ({ navigation, handleLogin }) => {
                     />
                 </View>
                 <TouchableOpacity
-                    className="w-full border p-3 bg-blue-700"
+                    className="w-full  p-3 bg-blue-500"
                     onPress={handleLoginPress}
                 >
                     <Text className="text-center text-white">LOGIN</Text>

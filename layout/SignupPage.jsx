@@ -12,7 +12,7 @@ const SignupPage = () => {
     const handleSignup = async () => {
         try {
             const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
-            console.log("Account registration successful " + userCredentials);
+            // console.log( userCredentials.user.uid);
             setEmail('');
             setPassword('');
             navigation.navigate('LoginPage')
@@ -40,20 +40,21 @@ const SignupPage = () => {
     };
 
     return (
-        <View className="flex-1 items-center justify-center">
+        <View className="flex-1 items-center justify-center bg-slate-100">
             <View className="space-y-4  w-1/2 items-center">
                 <View className="w-full ">
                     <TextInput
-                        className="border px-3 py-2"
+                        className="border px-3 py-2 bg-white border-slate-400"
                         placeholder="Email"
                         placeholderTextColor="#003f5c"
                         value={email}
                         onChangeText={(text) => setEmail(text)}
+                        autoCapitalize='none'
                     />
                 </View>
                 <View className="w-full">
                     <TextInput
-                        className="border px-3 py-2"
+                        className="border px-3 py-2 bg-white border-slate-400"
                         placeholder="Password"
                         placeholderTextColor="#003f5c"
                         value={password}
