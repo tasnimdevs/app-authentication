@@ -35,7 +35,6 @@ export default function HomePage({ route }) {
     // console.log(totalBalance);
 
 
-
     const handleOpenModal = () => {
         setIsModalVisible(true);
     };
@@ -45,9 +44,11 @@ export default function HomePage({ route }) {
     };
 
     const handleSaveModal = () => {
+        const categoryId = uuidv4();
         const userId = uid;
-        set(ref(db, 'category/' + (userId)), {
-            id: userId,
+        set(ref(db, 'category/' + (categoryId)), {
+            id: categoryId,
+            userId: userId,
             title: textValue,
         });
         // Do something with textValue and numberValue
@@ -57,15 +58,11 @@ export default function HomePage({ route }) {
         setIsModalVisible(false);
     };
 
-    const handleListItemPress = (categoryName) => {
-        navigation.navigate('CategoryPage', { categoryName });
+    const handleListItemPress = (category) => {
+        
+        navigation.navigate('CategoryPage', { category });
         // Navigate to the new component and pass data
     };
-
-    useEffect(() => {
-        // console.log(route);
-    });
-
 
     useEffect(() => {
         let itemsRef = ref(db, 'category');
@@ -84,7 +81,7 @@ export default function HomePage({ route }) {
                 // console.error("Error retrieving data:", error);
             });
 
-    }, [])
+    }, [cates])
 
     return (
         <>
@@ -103,7 +100,7 @@ export default function HomePage({ route }) {
                             <TouchableOpacity
                                 key={index}
                                 className="bg-white rounded-lg p-5 my-2 shadow flex-1"
-                                onPress={() => handleListItemPress(cate.title)}
+                                onPress={() => handleListItemPress(cate)}
                             >
 
                                 <View className="flex justify-between flex-row">
