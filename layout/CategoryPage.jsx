@@ -17,26 +17,43 @@ const CategoryPage = ({ route }) => {
   const [totalIncome, setTotalIncome] = useState(0);
 
   let totalBalance = totalIncome - totalExpense;
-  console.log('category : ', category);
+  // console.log('category : ', category);
 
   useEffect(() => {
-    const categoryRef = ref(db, `transaction/${category.id}`);
+    const categoryRef = ref(db, `transaction`);
     const onDataChange = (snapshot) => {
+
       const data = snapshot.val();
       if (data) {
-        
-        const incomeTransactions = Object.values(data).filter(transaction => transaction.categoryType === 'income' && transaction.categoryId === category.id);
-        const expenseTransactions = Object.values(data).filter(transaction => transaction.categoryType === 'expense' && transaction.categoryId === category.id);
+      console.log('transection data');
+
+        const incomeTransactions = Object.values(data).filter(transaction => transaction.categoryType === 'income' && transaction.categoryId === category.id && transaction.userId === category.userId);
+
+        const expenseTransactions = Object.values(data).filter(transaction => transaction.categoryType === 'expense' && transaction.categoryId === category.id && transaction.userId === category.userId);
+
         setIncomeList(incomeTransactions);
         setExpenseList(expenseTransactions);
       }
     };
     const categoryListener = onValue(categoryRef, onDataChange);
+    console.log('transection updated');
 
     return () => {
       categoryListener();
     };
-  }, [category.title]);
+    // console.log('expense:', expenseList);
+
+    // console.log('income:', incomeList);
+  }, []);
+
+
+
+  /* useEffect(() => {
+
+    console.log('expense:', expenseList);
+
+    console.log('income:', incomeList);
+  }, [incomeList, expenseList]); */
 
   useEffect(() => {
     const total = expenseList.reduce((accumulator, currentExpense) => {
@@ -74,6 +91,7 @@ const CategoryPage = ({ route }) => {
         amount: parseFloat(formAmount),
         categoryId: category.id,
         categoryName: category.title,
+        userId: category.userId,
       };
 
       if (selectedOption === 'income') {

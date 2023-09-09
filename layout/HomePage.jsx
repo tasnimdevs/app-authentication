@@ -1,11 +1,10 @@
 import { Modal, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { db } from '../firebase'
-import { ref, set, get } from 'firebase/database'
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { auth, db } from '../firebase'
+import { onValue, ref, set, get } from 'firebase/database'
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
-
 
 
 export default function HomePage({ route }) {
@@ -46,20 +45,22 @@ export default function HomePage({ route }) {
     const handleSaveModal = () => {
         const categoryId = uuidv4();
         const userId = uid;
-        set(ref(db, 'category/' + (categoryId)), {
+        const dataCateAdd = {
             id: categoryId,
             userId: userId,
             title: textValue,
-        });
+        };
+        set(ref(db, 'category/' + (categoryId)), dataCateAdd);
+
         // Do something with textValue and numberValue
-        console.log('Text:', textValue);
-        setCates([...cates, { name: textValue }]);
+        setCates([...cates, dataCateAdd]);
+
         setTextValue('')
         setIsModalVisible(false);
     };
 
     const handleListItemPress = (category) => {
-        
+
         navigation.navigate('CategoryPage', { category });
         // Navigate to the new component and pass data
     };
@@ -70,9 +71,8 @@ export default function HomePage({ route }) {
             .then((snapshot) => {
                 if (snapshot.exists()) {
                     const allData = snapshot.val();
-                    const itemsList = Object.values(allData);
+                    const itemsList = Object.values(allData).filter(category => category.userId === uid);
                     setCates(itemsList);
-                    // console.log("All retrieved data:", itemsList);
                 } else {
                     console.log("No data available");
                 }
@@ -81,7 +81,56 @@ export default function HomePage({ route }) {
                 // console.error("Error retrieving data:", error);
             });
 
-    }, [cates])
+
+
+
+
+
+        const onDataChange = () => {
+            get(itemsRef)
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const allData = snapshot.val();
+                        const itemsList = Object.values(allData).filter(category => category.userId === uid);
+                        setCates(itemsList);
+                    } else {
+                        setCates([]);
+                        alert("No data available");
+                        navigation.navigate('HomePage')
+                    }
+                })
+                .catch((error) => {
+                    // console.error("Error retrieving data:", error);
+                });
+        };
+        const allCatesListener = onValue(itemsRef, onDataChange);
+
+        return () => {
+            allCatesListener();
+        };
+
+    }, [])
+
+    useFocusEffect(
+        React.useCallback(() => {
+            let itemsRef = ref(db, 'category');
+            get(itemsRef)
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const allData = snapshot.val();
+                        const itemsList = Object.values(allData).filter(category => category.userId === uid);
+                        setCates(itemsList);
+                    } else {
+                        setCates([]);
+                        console.log("No data available");
+                    }
+                })
+                .catch((error) => {
+                    // console.error("Error retrieving data:", error);
+                });
+
+        }, [])
+    );
 
     return (
         <>
