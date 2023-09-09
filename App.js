@@ -4,13 +4,11 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './firebase'
 import 'react-native-gesture-handler';
 
-
 import LoginPage from './layout/LoginPage';
 import HomePage from './layout/HomePage';
 import SignupPage from './layout/SignupPage';
 import ForgotPassPage from './layout/ForgotPassPage';
 import CategoryPage from './layout/CategoryPage';
-
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -22,9 +20,12 @@ export default function App() {
 
       console.log('Login successful');
       setIsAuthenticated(true);
-      setCredentials(userCredentials.user);
-    }
-    catch (error) {
+      setCredentials({
+        uid: userCredentials.user.uid,
+        email: userCredentials.user.email,
+        // Add other user-related data as needed
+      });
+    } catch (error) {
       console.error('Login failed:', error);
       alert("Incorrect Email or Password");
     }
@@ -36,11 +37,7 @@ export default function App() {
     }
   }, [credentials]);
 
-
-
   return (
     <AppNavigator isAuthenticated={isAuthenticated} credentials={credentials} handleLogin={handleLogin} />
   );
 }
-
-

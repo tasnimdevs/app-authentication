@@ -32,10 +32,11 @@ export default function AppNavigator({ isAuthenticated, handleLogin, credentials
             {credentials ?
 
                 <Stack.Navigator>
+                    <Stack.Screen name="HomePage" component={HomePage} initialParams={{ credentials }} />
                     {/* <Stack.Screen name="HomePage" component={HomePage} /> */}
-                    <Stack.Screen name="HomePage">
+                   {/*  <Stack.Screen name="HomePage">
                         {(props) => <HomePage {...props} initialParams={credentials} />}
-                    </Stack.Screen>
+                    </Stack.Screen> */}
                     <Stack.Screen name="CategoryPage" component={CategoryPage} />
                 </Stack.Navigator>
                 :

@@ -1,5 +1,5 @@
-import { Alert, Button, FlatList, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { useEffect, useState } from 'react';
+import { Modal, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { db } from '../firebase'
 import { ref, set, get } from 'firebase/database'
@@ -12,12 +12,16 @@ export default function HomePage({ route }) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [textValue, setTextValue] = useState('');
     const [cates, setCates] = useState([]);
-    // const { credentials } = route.params;
+    const { credentials } = route.params;
 
     const navigation = useNavigation();
 
-    console.log('homescreen: ', route);
+    const { email, uid } = credentials;
 
+    useEffect(() => {
+        console.log('homescreen email:', email);
+        console.log('homescreen uid:', uid);
+    }, []);
 
     const toSnakeCase = (str = '') => {
         str = str.trim();
@@ -30,7 +34,7 @@ export default function HomePage({ route }) {
 
     // console.log(totalBalance);
 
-  
+
 
     const handleOpenModal = () => {
         setIsModalVisible(true);
@@ -41,9 +45,9 @@ export default function HomePage({ route }) {
     };
 
     const handleSaveModal = () => {
-        const newId = uuidv4();
-        set(ref(db, 'category/' + toSnakeCase(newId)), {
-            id: newId,
+        const userId = uid;
+        set(ref(db, 'category/' + (userId)), {
+            id: userId,
             title: textValue,
         });
         // Do something with textValue and numberValue
@@ -61,7 +65,7 @@ export default function HomePage({ route }) {
     useEffect(() => {
         // console.log(route);
     });
-    
+
 
     useEffect(() => {
         let itemsRef = ref(db, 'category');
@@ -84,9 +88,12 @@ export default function HomePage({ route }) {
 
     return (
         <>
-
             <View className="bg-orange-300 flex-1">
                 <ScrollView className="bg-gray-300">
+                    <View className="flex-1 justify-between flex-row">
+                        <Text>{uid}</Text>
+                        <Text>{email}</Text>
+                    </View>
                     <View className="flex m-10">
                         <View className="flex justify-between flex-row">
                             <Text className="text-2xl font-bold">Category</Text>
