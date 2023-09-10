@@ -37,7 +37,12 @@ export default function App() {
     }
   }, [credentials]);
 
+  const handleSignOut = () => {
+    console.log('Logout');
+    setIsAuthenticated(false);
+  };
+
   return (
-    <AppNavigator isAuthenticated={isAuthenticated} credentials={credentials} handleLogin={handleLogin} />
+    <AppNavigator handleSignOut={handleSignOut} isAuthenticated={isAuthenticated} credentials={credentials} handleLogin={handleLogin} />
   );
 }

@@ -1,22 +1,39 @@
 import { Modal, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { auth, db } from '../firebase'
+import { db } from '../firebase'
 import { onValue, ref, set, get } from 'firebase/database'
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
+
 
 
 export default function HomePage({ route }) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [textValue, setTextValue] = useState('');
     const [cates, setCates] = useState([]);
-    const { credentials } = route.params;
-
+    const { credentials, isAuthenticated, handleSignOut } = route.params;
     const navigation = useNavigation();
 
     const { email, uid } = credentials;
 
+
+    const handleSignOutPress = () => {
+        handleSignOut();
+    };
+
+
+  /*   const { credentials, isAuthenticated, refHandleSignOut } = route.params;
+    const navigation = useNavigation();
+
+    const { email, uid } = credentials;
+
+
+    const handleSignOutPress = () => {
+        handleSignOut();
+    };
+    const refHandleSignOut = ref(handleSignOut);
+     */
     useEffect(() => {
         console.log('homescreen email:', email);
         console.log('homescreen uid:', uid);
@@ -32,7 +49,6 @@ export default function HomePage({ route }) {
     };
 
     // console.log(totalBalance);
-
 
     const handleOpenModal = () => {
         setIsModalVisible(true);
@@ -51,10 +67,8 @@ export default function HomePage({ route }) {
             title: textValue,
         };
         set(ref(db, 'category/' + (categoryId)), dataCateAdd);
-
         // Do something with textValue and numberValue
         setCates([...cates, dataCateAdd]);
-
         setTextValue('')
         setIsModalVisible(false);
     };
@@ -80,11 +94,6 @@ export default function HomePage({ route }) {
             .catch((error) => {
                 // console.error("Error retrieving data:", error);
             });
-
-
-
-
-
 
         const onDataChange = () => {
             get(itemsRef)
@@ -136,10 +145,18 @@ export default function HomePage({ route }) {
         <>
             <View className="bg-orange-300 flex-1">
                 <ScrollView className="bg-gray-300">
+
+
+
                     <View className="flex-1 justify-between flex-row">
                         <Text>{uid}</Text>
                         <Text>{email}</Text>
                     </View>
+                    <TouchableOpacity
+                        className="flex-1 bg-red-500 rounded-md p-2.5"
+                        onPress={handleSignOutPress}>
+                        <Text className="text-center text-lg text-white" >LogOut</Text>
+                    </TouchableOpacity>
                     <View className="flex m-10">
                         <View className="flex justify-between flex-row">
                             <Text className="text-2xl font-bold">Category</Text>
@@ -160,17 +177,17 @@ export default function HomePage({ route }) {
                         ))}
                     </View>
                 </ScrollView>
+
+
+
                 <TouchableOpacity className="absolute opacity-6 bottom-10 right-10 bg-sky-700 rounded-full w-16 h-16 flex justify-center items-center line-clamp-1 shadow" onPress={handleOpenModal}>
                     <Text className="text-4xl text-white">+</Text>
                 </TouchableOpacity>
             </View>
 
 
-
             <Modal visible={isModalVisible} animationType="fade" transparent>
                 <View className="flex-1 items-center justify-center" style={{ 'backgroundColor': 'rgba(0,0,0,.8)' }}>
-
-
                     <View className="bg-orange-50 w-80 px-5 pb-10 pt-5 rounded-md">
                         <Text className="mb-5 text-lg">Insert your category name</Text>
                         <TextInput
