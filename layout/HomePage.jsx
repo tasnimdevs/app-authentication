@@ -17,9 +17,12 @@ export default function HomePage({ route }) {
 
     const { email, uid } = credentials;
 
+    
+
 
     const handleSignOutPress = () => {
         handleSignOut();
+
     };
 
 
@@ -34,6 +37,7 @@ export default function HomePage({ route }) {
     };
     const refHandleSignOut = ref(handleSignOut);
      */
+
     useEffect(() => {
         console.log('homescreen email:', email);
         console.log('homescreen uid:', uid);
