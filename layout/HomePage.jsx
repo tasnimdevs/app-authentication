@@ -5,6 +5,8 @@ import { db } from '../firebase'
 import { onValue, ref, set, get } from 'firebase/database'
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
+import CatesList from '../component/CatesList';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
 
@@ -23,17 +25,17 @@ export default function HomePage({ route }) {
     };
 
 
-  /*   const { credentials, isAuthenticated, refHandleSignOut } = route.params;
-    const navigation = useNavigation();
-
-    const { email, uid } = credentials;
-
-
-    const handleSignOutPress = () => {
-        handleSignOut();
-    };
-    const refHandleSignOut = ref(handleSignOut);
-     */
+    /*   const { credentials, isAuthenticated, refHandleSignOut } = route.params;
+      const navigation = useNavigation();
+  
+      const { email, uid } = credentials;
+  
+  
+      const handleSignOutPress = () => {
+          handleSignOut();
+      };
+      const refHandleSignOut = ref(handleSignOut);
+       */
     useEffect(() => {
         console.log('homescreen email:', email);
         console.log('homescreen uid:', uid);
@@ -73,11 +75,7 @@ export default function HomePage({ route }) {
         setIsModalVisible(false);
     };
 
-    const handleListItemPress = (category) => {
 
-        navigation.navigate('CategoryPage', { category });
-        // Navigate to the new component and pass data
-    };
 
     useEffect(() => {
         let itemsRef = ref(db, 'category');
@@ -163,17 +161,21 @@ export default function HomePage({ route }) {
                             <Text className="text-2xl font-bold">Balance</Text>
                         </View>
                         {cates.map((cate, index) => (
-                            <TouchableOpacity
-                                key={index}
-                                className="bg-white rounded-lg p-5 my-2 shadow flex-1"
-                                onPress={() => handleListItemPress(cate)}
-                            >
+                            <GestureHandlerRootView >
+                                <CatesList key={index} index={index} cate={cate} />
+                            </GestureHandlerRootView>
 
-                                <View className="flex justify-between flex-row">
-                                    <Text className="text-2xl">{cate.title}</Text>
-                                    <Text className="text-2xl">200.00</Text>
-                                </View>
-                            </TouchableOpacity>
+                            /*  <TouchableOpacity
+                                 key={index}
+                                 className="bg-white rounded-lg p-5 my-2 shadow flex-1"
+                                 onPress={() => handleListItemPress(cate)}
+                             >
+ 
+                                 <View className="flex justify-between flex-row">
+                                     <Text className="text-2xl">{cate.title}</Text>
+                                     <Text className="text-2xl">200.00</Text>
+                                 </View>
+                             </TouchableOpacity> */
                         ))}
                     </View>
                 </ScrollView>

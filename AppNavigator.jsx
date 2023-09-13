@@ -6,7 +6,7 @@ import LoginPage from './layout/LoginPage';
 import HomePage from './layout/HomePage';
 import SignupPage from './layout/SignupPage';
 import ForgotPassPage from './layout/ForgotPassPage';
-import CategoryPage from './layout/CategoryPage';
+import CategoryPage from './component/CategoryPage';
 
 
 
@@ -29,12 +29,12 @@ export default function AppNavigator({ isAuthenticated, handleLogin, credentials
     return (
 
         <NavigationContainer>
-            {credentials && isAuthenticated?
+            {credentials && isAuthenticated ?
 
                 <Stack.Navigator>
                     <Stack.Screen name="HomePage" component={HomePage} initialParams={{ credentials, isAuthenticated, handleSignOut }} />
                     {/* <Stack.Screen name="HomePage" component={HomePage} /> */}
-                   {/*  <Stack.Screen name="HomePage">
+                    {/*  <Stack.Screen name="HomePage">
                         {(props) => <HomePage {...props} initialParams={credentials} />}
                     </Stack.Screen> */}
                     <Stack.Screen name="CategoryPage" component={CategoryPage} />

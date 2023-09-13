@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView, Text, View, TouchableOpacity, Modal, TextInput, Button } from 'react-native';
-import CustomRadioButton from './CustomRadioButton';
+import CustomRadioButton from '../layout/CustomRadioButton';
 import { db } from '../firebase'
 import { onValue, ref, set } from 'firebase/database'
 import { v4 as uuidv4 } from 'uuid';
+import CatesList from './CatesList';
+import { useNavigation } from '@react-navigation/native';
 
-const CategoryPage = ({ route }) => {
+const CategoryPage = ({ route, setTotalBalance }) => {
   const { category } = route.params;
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [formTitle, setFormTitle] = useState('');
@@ -16,8 +18,14 @@ const CategoryPage = ({ route }) => {
   const [totalExpense, setTotalExpense] = useState(0);
   const [totalIncome, setTotalIncome] = useState(0);
 
-  let totalBalance = totalIncome - totalExpense;
+  const totalBalance = totalIncome - totalExpense;
   // console.log('category : ', category);
+
+  useEffect(() => {
+    // Calculate totalBalance whenever the income or expense lists change
+    const newTotalBalance = totalIncome - totalExpense;
+    setTotalBalance(newTotalBalance);
+  }, [totalIncome, totalExpense]);
 
   useEffect(() => {
     const categoryRef = ref(db, `transaction`);
@@ -25,7 +33,7 @@ const CategoryPage = ({ route }) => {
 
       const data = snapshot.val();
       if (data) {
-      console.log('transection data');
+        console.log('transection data');
 
         const incomeTransactions = Object.values(data).filter(transaction => transaction.categoryType === 'income' && transaction.categoryId === category.id && transaction.userId === category.userId);
 
@@ -119,12 +127,19 @@ const CategoryPage = ({ route }) => {
     <>
       <View className="flex-1 bg-orange-400 ">
 
+
         <ScrollView className="bg-gray-300">
           <View>
             <View className="flex flex-row p-2 justify-between items-center">
               <Text className="text-3xl font-bold">{category.title}</Text>
               <Text className="text-xl font-bold">Total Balance : {totalBalance}</Text>
-
+              {/* <View>
+                <Button
+                  title="Go to CatesList"
+                  onPress={handleNavigateToCatesList}
+                />
+                <Text className="text-xl font-bold">Total Balance: {totalBalance}</Text>
+              </View> */}
             </View>
 
             <View className="bg-gray-200 mt-3">
@@ -168,6 +183,7 @@ const CategoryPage = ({ route }) => {
               <View className="flex justify-between flex-row p-3">
                 <Text className="text-xl  font-bold">Total Income :</Text>
                 <Text className="text-xl  font-bold">{totalIncome}</Text>
+
               </View>
             </View>
 
