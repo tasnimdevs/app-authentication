@@ -48,12 +48,6 @@ const CategoryPage = ({ route }) => {
 
 
 
-  /* useEffect(() => {
-
-    console.log('expense:', expenseList);
-
-    console.log('income:', incomeList);
-  }, [incomeList, expenseList]); */
 
   useEffect(() => {
     const total = expenseList.reduce((accumulator, currentExpense) => {
@@ -68,11 +62,6 @@ const CategoryPage = ({ route }) => {
     }, 0);
     setTotalIncome(total);
   }, [incomeList]);
-
-  /*  useEffect(() => {
-       getTotalBalance(totalBalance);
-       console.log(totalBalance);
-   }, [totalBalance]) */
 
   const handleOpenForm = () => {
     setIsFormVisible(true);
@@ -102,7 +91,6 @@ const CategoryPage = ({ route }) => {
 
       set(ref(db, `transaction/${newTransaction.id}`), newTransaction);
     }
-
 
     // Clear form fields and reset state
     setFormTitle('');

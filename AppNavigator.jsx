@@ -36,9 +36,9 @@ export default function AppNavigator({ isAuthenticated, handleLogin, credentials
             {credentials && isAuthenticated ?
 
                 <Stack.Navigator>
-                    <Stack.Screen name="HomePage" component={HomePage} initialParams={{ credentials, isAuthenticated }} options={{
+                    <Stack.Screen name="HomePage" component={HomePage} initialParams={{ credentials, isAuthenticated, handleSignOut }} /* options={{
                         onPress: () => handleSignOut,
-                    }} />
+                    }} */ />
                     {/* <Stack.Screen name="HomePage" component={HomePage} /> */}
                     {/*  <Stack.Screen name="HomePage">
                         {(props) => <HomePage {...props} initialParams={credentials} />}

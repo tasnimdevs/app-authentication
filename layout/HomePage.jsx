@@ -1,5 +1,5 @@
 import { Modal, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { db } from '../firebase'
 import { onValue, ref, set, get } from 'firebase/database'
@@ -12,32 +12,17 @@ export default function HomePage({ route }) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [textValue, setTextValue] = useState('');
     const [cates, setCates] = useState([]);
-    const { credentials, isAuthenticated, handleSignOut } = route.params;
+    const { credentials, handleSignOut } = route.params;
     const navigation = useNavigation();
 
     const { email, uid } = credentials;
 
     
+    const handleSignOutPress = useCallback(() => {
+        handleSignOut()
+    }, []);
 
-
-    const handleSignOutPress = () => {
-        handleSignOut();
-
-    };
-
-
-  /*   const { credentials, isAuthenticated, refHandleSignOut } = route.params;
-    const navigation = useNavigation();
-
-    const { email, uid } = credentials;
-
-
-    const handleSignOutPress = () => {
-        handleSignOut();
-    };
-    const refHandleSignOut = ref(handleSignOut);
-     */
-
+  
     useEffect(() => {
         console.log('homescreen email:', email);
         console.log('homescreen uid:', uid);
@@ -144,6 +129,11 @@ export default function HomePage({ route }) {
 
         }, [])
     );
+
+   /*  const handleSignOutPress = () => {
+        handleSignOut();
+
+    }; */
 
     return (
         <>
