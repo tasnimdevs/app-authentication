@@ -7,6 +7,7 @@ import HomePage from './layout/HomePage';
 import SignupPage from './layout/SignupPage';
 import ForgotPassPage from './layout/ForgotPassPage';
 import CategoryPage from './component/CategoryPage';
+import { AppProvider } from './AppProvider';
 
 
 
@@ -31,30 +32,31 @@ export default function AppNavigator({ isAuthenticated, handleLogin, credentials
     //     console.log(uData);
     // }
     return (
+        <AppProvider>
+            <NavigationContainer>
+                {credentials && isAuthenticated ?
 
-        <NavigationContainer>
-            {credentials && isAuthenticated ?
-
-                <Stack.Navigator>
-                    <Stack.Screen name="HomePage" component={HomePage} initialParams={{ credentials, isAuthenticated, handleSignOut }} /* options={{
+                    <Stack.Navigator>
+                        <Stack.Screen name="HomePage" component={HomePage} initialParams={{ credentials, isAuthenticated, handleSignOut }} /* options={{
                         onPress: () => handleSignOut,
                     }} */ />
-                    {/* <Stack.Screen name="HomePage" component={HomePage} /> */}
-                    {/*  <Stack.Screen name="HomePage">
+                        {/* <Stack.Screen name="HomePage" component={HomePage} /> */}
+                        {/*  <Stack.Screen name="HomePage">
                         {(props) => <HomePage {...props} initialParams={credentials} />}
                     </Stack.Screen> */}
-                    <Stack.Screen name="CategoryPage" component={CategoryPage} />
-                </Stack.Navigator>
-                :
-                <Stack.Navigator>
-                    <Stack.Screen name="LoginPage">
-                        {(props) => <LoginPage {...props} handleLogin={handleLogin} />}
-                    </Stack.Screen>
+                        <Stack.Screen name="CategoryPage" component={CategoryPage} />
+                    </Stack.Navigator>
+                    :
+                    <Stack.Navigator>
+                        <Stack.Screen name="LoginPage">
+                            {(props) => <LoginPage {...props} handleLogin={handleLogin} />}
+                        </Stack.Screen>
 
-                    <Stack.Screen name="SignupPage" component={SignupPage} />
-                    <Stack.Screen name="ForgotPassPage" component={ForgotPassPage} />
-                </Stack.Navigator>
-            }
-        </NavigationContainer>
+                        <Stack.Screen name="SignupPage" component={SignupPage} />
+                        <Stack.Screen name="ForgotPassPage" component={ForgotPassPage} />
+                    </Stack.Navigator>
+                }
+            </NavigationContainer>
+        </AppProvider>
     );
 }

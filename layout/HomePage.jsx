@@ -19,12 +19,14 @@ export default function HomePage({ route }) {
 
     const { email, uid } = credentials;
 
-    
+    //    console.log('home Cate',cates);
+
+
     const handleSignOutPress = useCallback(() => {
         handleSignOut()
     }, []);
 
-  
+
     useEffect(() => {
         console.log('homescreen email:', email);
         console.log('homescreen uid:', uid);
@@ -73,7 +75,7 @@ export default function HomePage({ route }) {
                 if (snapshot.exists()) {
                     const allData = snapshot.val();
                     const itemsList = Object.values(allData).filter(category => category.userId === uid);
-                    setCates(itemsList);
+                    // setCates(itemsList);
                 } else {
                     console.log("No data available");
                 }
@@ -88,9 +90,9 @@ export default function HomePage({ route }) {
                     if (snapshot.exists()) {
                         const allData = snapshot.val();
                         const itemsList = Object.values(allData).filter(category => category.userId === uid);
-                        setCates(itemsList);
+                        // setCates(itemsList);
                     } else {
-                        setCates([]);
+                        // setCates([]);
                         alert("No data available");
                         navigation.navigate('HomePage')
                     }
@@ -117,7 +119,7 @@ export default function HomePage({ route }) {
                         const itemsList = Object.values(allData).filter(category => category.userId === uid);
                         setCates(itemsList);
                     } else {
-                        setCates([]);
+                        // setCates([]);
                         console.log("No data available");
                     }
                 })
@@ -128,10 +130,10 @@ export default function HomePage({ route }) {
         }, [])
     );
 
-   /*  const handleSignOutPress = () => {
-        handleSignOut();
-
-    }; */
+    /*  const handleSignOutPress = () => {
+         handleSignOut();
+ 
+     }; */
 
     return (
         <>
@@ -155,7 +157,7 @@ export default function HomePage({ route }) {
                             <Text className="text-2xl font-bold">Balance</Text>
                         </View>
                         {cates.map((cate, index) => (
-                            <GestureHandlerRootView >
+                            <GestureHandlerRootView key={index}>
                                 <CatesList key={index} index={index} cate={cate} />
                             </GestureHandlerRootView>
 

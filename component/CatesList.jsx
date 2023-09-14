@@ -2,13 +2,19 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import { useAppContext } from '../AppProvider';
 
-const CatesList = ({ cate, totalBalance, index }) => {
+const CatesList = ({ cate, index }) => {
+  console.log(cate.id);
   const navigation = useNavigation();
+  const { totalBalance } = useAppContext();
+  console.log("cateList totalBalance:",totalBalance);
 
   const handleListItemPress = (category) => {
     navigation.navigate('CategoryPage', { category });
   };
+
+
 
   return (
     <ScrollView>
