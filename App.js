@@ -12,8 +12,7 @@ import CategoryPage from './component/CategoryPage';
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [credentials, setCredentials] = useState(null); // Initialize credentials as null
-
+  const [credentials, setCredentials] = useState(null); 
   const handleLogin = async (email, password) => {
     try {
       const userCredentials = await signInWithEmailAndPassword(auth, email, password);
@@ -23,7 +22,7 @@ export default function App() {
       setCredentials({
         uid: userCredentials.user.uid,
         email: userCredentials.user.email,
-        // Add other user-related data as needed
+        
       });
     } catch (error) {
       console.error('Login failed:', error);

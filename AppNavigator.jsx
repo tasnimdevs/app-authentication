@@ -14,6 +14,10 @@ const Stack = createNativeStackNavigator();
 
 export default function AppNavigator({ isAuthenticated, handleLogin, credentials, handleSignOut }) {
 
+    // const handleSignOut = () => {
+    //     handleSignOut()
+    //     console.log('appNavigator signout');
+    // };
     // useEffect(() => {
     // console.log("appNavigator:", credentials.email, credentials.uid);
     // })
@@ -32,7 +36,9 @@ export default function AppNavigator({ isAuthenticated, handleLogin, credentials
             {credentials && isAuthenticated ?
 
                 <Stack.Navigator>
-                    <Stack.Screen name="HomePage" component={HomePage} initialParams={{ credentials, isAuthenticated, handleSignOut }} />
+                    <Stack.Screen name="HomePage" component={HomePage} initialParams={{ credentials, isAuthenticated, handleSignOut }} /* options={{
+                        onPress: () => handleSignOut,
+                    }} */ />
                     {/* <Stack.Screen name="HomePage" component={HomePage} /> */}
                     {/*  <Stack.Screen name="HomePage">
                         {(props) => <HomePage {...props} initialParams={credentials} />}
