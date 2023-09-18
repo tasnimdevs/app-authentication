@@ -55,7 +55,7 @@ const SignupPage = () => {
                 <View className="w-full">
                     <TextInput
                         className="border px-3 py-2 bg-white border-slate-400"
-                        placeholder="Password"
+                        placeholder="Set your password"
                         placeholderTextColor="#003f5c"
                         value={password}
                         secureTextEntry={true}

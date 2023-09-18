@@ -9,6 +9,9 @@ const CatesList = ({ cate, index }) => {
   const navigation = useNavigation();
   const { totalBalance } = useAppContext();
   console.log("cateList totalBalance:",totalBalance);
+  const specificTotalBalance = totalBalance[cate.id];
+  console.log('specificTotalBalance', specificTotalBalance);
+
 
   const handleListItemPress = (category) => {
     navigation.navigate('CategoryPage', { category });
