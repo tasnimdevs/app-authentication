@@ -8,7 +8,7 @@ const CatesList = ({ cate, index }) => {
   console.log(cate.id);
   const navigation = useNavigation();
   const { totalBalance } = useAppContext();
-  console.log("cateList totalBalance:",totalBalance);
+  console.log("cateList totalBalance:", totalBalance);
   const specificTotalBalance = totalBalance[cate.id];
   console.log('specificTotalBalance', specificTotalBalance);
 
