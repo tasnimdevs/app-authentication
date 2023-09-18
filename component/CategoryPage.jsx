@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView, Text, View, TouchableOpacity, Modal, TextInput, Button } from 'react-native';
-import CustomRadioButton from './CustomRadioButton';
+import CustomRadioButton from '../layout/CustomRadioButton';
 import { db } from '../firebase'
 import { onValue, ref, set } from 'firebase/database'
 import { v4 as uuidv4 } from 'uuid';
+import { useAppContext } from '../AppProvider';
 
 const CategoryPage = ({ route }) => {
   const { category } = route.params;
@@ -15,39 +16,30 @@ const CategoryPage = ({ route }) => {
   const [expenseList, setExpenseList] = useState([]);
   const [totalExpense, setTotalExpense] = useState(0);
   const [totalIncome, setTotalIncome] = useState(0);
+  const { updateTotalBalance } = useAppContext();
 
-  let totalBalance = totalIncome - totalExpense;
-  // console.log('category : ', category);
+
+  const totalBalance = totalIncome - totalExpense;
+
+  updateTotalBalance(totalBalance);
 
   useEffect(() => {
-    const categoryRef = ref(db, `transaction`);
+    const categoryRef = ref(db, 'transaction');
     const onDataChange = (snapshot) => {
-
       const data = snapshot.val();
       if (data) {
-      console.log('transection data');
-
         const incomeTransactions = Object.values(data).filter(transaction => transaction.categoryType === 'income' && transaction.categoryId === category.id && transaction.userId === category.userId);
-
         const expenseTransactions = Object.values(data).filter(transaction => transaction.categoryType === 'expense' && transaction.categoryId === category.id && transaction.userId === category.userId);
-
         setIncomeList(incomeTransactions);
         setExpenseList(expenseTransactions);
       }
     };
     const categoryListener = onValue(categoryRef, onDataChange);
-    console.log('transection updated');
 
     return () => {
       categoryListener();
     };
-    // console.log('expense:', expenseList);
-
-    // console.log('income:', incomeList);
-  }, []);
-
-
-
+  }, [category.id, category.userId]);
 
   useEffect(() => {
     const total = expenseList.reduce((accumulator, currentExpense) => {
@@ -62,6 +54,8 @@ const CategoryPage = ({ route }) => {
     }, 0);
     setTotalIncome(total);
   }, [incomeList]);
+
+
 
   const handleOpenForm = () => {
     setIsFormVisible(true);
@@ -103,16 +97,22 @@ const CategoryPage = ({ route }) => {
     { label: 'Income', value: 'income' },
     { label: 'Expense', value: 'expense' },
   ];
+
   return (
     <>
       <View className="flex-1 bg-orange-400 ">
-
         <ScrollView className="bg-gray-300">
           <View>
             <View className="flex flex-row p-2 justify-between items-center">
               <Text className="text-3xl font-bold">{category.title}</Text>
               <Text className="text-xl font-bold">Total Balance : {totalBalance}</Text>
-
+              {/* <View>
+                <Button
+                  title="Go to CatesList"
+                  onPress={handleNavigateToCatesList}
+                />
+                <Text className="text-xl font-bold">Total Balance: {totalBalance}</Text>
+              </View> */}
             </View>
 
             <View className="bg-gray-200 mt-3">
@@ -156,6 +156,7 @@ const CategoryPage = ({ route }) => {
               <View className="flex justify-between flex-row p-3">
                 <Text className="text-xl  font-bold">Total Income :</Text>
                 <Text className="text-xl  font-bold">{totalIncome}</Text>
+
               </View>
             </View>
 
@@ -168,9 +169,7 @@ const CategoryPage = ({ route }) => {
             <Text className="text-4xl text-white">+</Text>
           </TouchableOpacity>
         </View>
-
       </View>
-
 
 
       <Modal visible={isFormVisible} animationType="fade" transparent>
