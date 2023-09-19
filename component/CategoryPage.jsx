@@ -58,9 +58,12 @@ const CategoryPage = ({ route }) => {
 
 
 
-  const handleOpenForm = () => {
-    setIsFormVisible(true);
-  };
+  /*   const handleOpenForm = () => {
+      setIsFormVisible(true);
+  
+      console.log('handleOpenForm called'); // Add this debugging statement
+  
+    }; */
 
   const handleCloseForm = () => {
     setIsFormVisible(false);
@@ -99,6 +102,10 @@ const CategoryPage = ({ route }) => {
     { label: 'Expense', value: 'expense' },
   ];
 
+  useEffect(() => {
+    console.log(setIsFormVisible);
+  })
+
   return (
     <>
       <View className="flex-1 bg-orange-400 ">
@@ -109,8 +116,7 @@ const CategoryPage = ({ route }) => {
           totalExpense={totalExpense}
           incomeList={incomeList}
           totalIncome={totalIncome}
-          handleOpenForm={handleOpenForm}
-        />
+          setIsFormVisible={setIsFormVisible} />
 
 
       </View>
@@ -126,7 +132,6 @@ const CategoryPage = ({ route }) => {
         formAmount={formAmount}
         handleCloseForm={handleCloseForm}
         handleSaveForm={handleSaveForm}
-        options={options}
       />
     </>
   );

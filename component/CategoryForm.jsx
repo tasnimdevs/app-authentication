@@ -3,6 +3,10 @@ import React from 'react'
 import CustomRadioButton from '../layout/CustomRadioButton'
 
 const CategoryForm = (isFormVisible, selectedOption, setSelectedOption, setFormTitle, formTitle, setFormAmount, formAmount, handleCloseForm, handleSaveForm, options) => {
+  
+    
+
+      
     return (
         <Modal visible={isFormVisible} animationType="fade" transparent>
             <View className="flex-1 items-center justify-center" style={{ 'backgroundColor': 'rgba(0,0,0,.8)' }}>
