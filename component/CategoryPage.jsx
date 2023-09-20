@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView, Text, View, TouchableOpacity, Modal, TextInput, Button } from 'react-native';
-import CustomRadioButton from '../layout/CustomRadioButton';
+import CustomRadioButton from './CustomRadioButton';
 import { db } from '../firebase'
 import { onValue, ref, set } from 'firebase/database'
 import { v4 as uuidv4 } from 'uuid';
@@ -22,7 +22,10 @@ const CategoryPage = ({ route }) => {
 
   const totalBalance = totalIncome - totalExpense;
 
-  updateTotalBalance(totalBalance);
+  useEffect(() => {
+    updateTotalBalance(totalBalance);
+  }, [totalBalance, updateTotalBalance]);
+
 
   useEffect(() => {
     const categoryRef = ref(db, 'transaction');
@@ -70,6 +73,9 @@ const CategoryPage = ({ route }) => {
   };
 
   const handleSaveForm = () => {
+
+    if (!selectedOption || !formTitle || !formAmount) return;
+
     if (selectedOption === 'income' || selectedOption === 'expense') {
       const newTransaction = {
         id: uuidv4(),
@@ -88,6 +94,9 @@ const CategoryPage = ({ route }) => {
       }
 
       set(ref(db, `transaction/${newTransaction.id}`), newTransaction);
+
+
+
     }
 
     // Clear form fields and reset state
@@ -103,7 +112,8 @@ const CategoryPage = ({ route }) => {
   ];
 
   useEffect(() => {
-    console.log(setIsFormVisible);
+    // setIsFormVisible(true)
+    console.log('categoryPage:', isFormVisible);
   })
 
   return (
@@ -132,6 +142,7 @@ const CategoryPage = ({ route }) => {
         formAmount={formAmount}
         handleCloseForm={handleCloseForm}
         handleSaveForm={handleSaveForm}
+        options={options}
       />
     </>
   );

@@ -6,7 +6,7 @@ const CustomRadioButton = ({ options, selectedOption, onSelect }) => {
     <View className="flex flex-row justify-between">
       {options.map((option, index) => (
         <TouchableOpacity
-        className=""
+        
           key={index}
           style={[
             styles.radioButton,
@@ -33,7 +33,9 @@ const styles = StyleSheet.create({
   },
   selectedRadioButton: {
     borderColor: '#007AFF',
-    backgroundColor: '#D3D3D3' // Customize the selected color
+    backgroundColor: '#3490dc',
+    color: '#FFFFFF',
+     // Customize the selected color
   },
   radioButtonText: {
     marginLeft: 10,

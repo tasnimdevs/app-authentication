@@ -1,12 +1,14 @@
-import {  Text, View, TouchableOpacity, Modal, TextInput } from 'react-native';
-import React from 'react'
-import CustomRadioButton from '../layout/CustomRadioButton'
+import { Text, View, TouchableOpacity, Modal, TextInput } from 'react-native';
+import React, { useEffect } from 'react'
+import CustomRadioButton from './CustomRadioButton'
 
-const CategoryForm = (isFormVisible, selectedOption, setSelectedOption, setFormTitle, formTitle, setFormAmount, formAmount, handleCloseForm, handleSaveForm, options) => {
-  
-    
+const CategoryForm = ({ isFormVisible, selectedOption, setSelectedOption, setFormTitle, formTitle, setFormAmount, formAmount, handleCloseForm, handleSaveForm, options }) => {
 
-      
+
+    useEffect(() => {
+        console.log('form:', isFormVisible);
+    })
+
     return (
         <Modal visible={isFormVisible} animationType="fade" transparent>
             <View className="flex-1 items-center justify-center" style={{ 'backgroundColor': 'rgba(0,0,0,.8)' }}>

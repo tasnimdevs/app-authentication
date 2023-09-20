@@ -7,7 +7,8 @@ const CategoryList = ({ category, totalBalance, expenseList, totalExpense, incom
 
     const handleOpenForm = (e) => {
         setIsFormVisible(true);
-        
+        console.log("list");
+
     };
 
     console.log('list:', expenseList);
