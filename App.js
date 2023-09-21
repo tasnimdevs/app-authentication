@@ -17,7 +17,7 @@ export default function App() {
     try {
       const userCredentials = await signInWithEmailAndPassword(auth, email, password);
 
-      console.log('Login successful');
+      // console.log('Login successful');
       setIsAuthenticated(true);
       setCredentials({
         uid: userCredentials.user.uid,
@@ -39,6 +39,7 @@ export default function App() {
   const handleSignOut = () => {
     console.log('Logout');
     setIsAuthenticated(false);
+    setCredentials(null)
   };
 
   return (

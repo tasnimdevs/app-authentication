@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { ScrollView, Text, View, TouchableOpacity, Modal, TextInput, Button } from 'react-native';
-import CustomRadioButton from './CustomRadioButton';
+import { View } from 'react-native';
 import { db } from '../firebase'
 import { onValue, ref, set } from 'firebase/database'
 import { v4 as uuidv4 } from 'uuid';
@@ -44,6 +43,8 @@ const CategoryPage = ({ route }) => {
       categoryListener();
     };
   }, [category.id, category.userId]);
+  console.log('income:', incomeList);
+  console.log('expense:', expenseList);
 
   useEffect(() => {
     const total = expenseList.reduce((accumulator, currentExpense) => {
@@ -59,14 +60,7 @@ const CategoryPage = ({ route }) => {
     setTotalIncome(total);
   }, [incomeList]);
 
-
-
-  /*   const handleOpenForm = () => {
-      setIsFormVisible(true);
-  
-      console.log('handleOpenForm called'); // Add this debugging statement
-  
-    }; */
+ 
 
   const handleCloseForm = () => {
     setIsFormVisible(false);
@@ -94,16 +88,14 @@ const CategoryPage = ({ route }) => {
       }
 
       set(ref(db, `transaction/${newTransaction.id}`), newTransaction);
-
-
-
     }
-
     // Clear form fields and reset state
     setFormTitle('');
     setFormAmount('');
     setSelectedOption(null);
     setIsFormVisible(false);
+
+
   };
 
   const options = [
@@ -111,10 +103,7 @@ const CategoryPage = ({ route }) => {
     { label: 'Expense', value: 'expense' },
   ];
 
-  useEffect(() => {
-    // setIsFormVisible(true)
-    console.log('categoryPage:', isFormVisible);
-  })
+
 
   return (
     <>
@@ -126,9 +115,8 @@ const CategoryPage = ({ route }) => {
           totalExpense={totalExpense}
           incomeList={incomeList}
           totalIncome={totalIncome}
-          setIsFormVisible={setIsFormVisible} />
-
-
+          setIsFormVisible={setIsFormVisible}
+        />
       </View>
 
 

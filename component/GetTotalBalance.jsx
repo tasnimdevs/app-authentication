@@ -10,7 +10,6 @@ function GetTotalBalance({ cateId }) {
     const [totalIncome, setTotalIncome] = useState(0);
 
    
-
     useEffect(() => {
         const categoryRef = ref(db, 'transaction');
         const onDataChange = (snapshot) => {
@@ -43,14 +42,13 @@ function GetTotalBalance({ cateId }) {
     }, [incomeList]);
 
     const totalBalance = totalIncome - totalExpense;
-    console.log('getTotalBalance:', totalBalance);
+    // console.log('getTotalBalance:', totalBalance);
 
     return (
         <>
-            <Text>
+            <Text className="text-2xl">
                 {totalBalance}
             </Text>
-
         </>
     )
 }

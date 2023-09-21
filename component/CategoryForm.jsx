@@ -6,7 +6,7 @@ const CategoryForm = ({ isFormVisible, selectedOption, setSelectedOption, setFor
 
 
     useEffect(() => {
-        console.log('form:', isFormVisible);
+        // console.log('form:', isFormVisible);
     })
 
     return (

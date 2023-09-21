@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 
 
+
 const LoginPage = ({ navigation, handleLogin }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -54,6 +55,7 @@ const LoginPage = ({ navigation, handleLogin }) => {
                     <Text className="font-bold text-xl ">Create new account</Text>
                 </TouchableOpacity>
             </View>
+
 
         </View>
     )

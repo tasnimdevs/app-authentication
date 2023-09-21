@@ -32,9 +32,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   selectedRadioButton: {
-    borderColor: '#007AFF',
-    backgroundColor: '#3490dc',
-    color: '#FFFFFF',
+    backgroundColor: '#00C853', // Customize the selected color here
+    borderColor: '#00C853', 
      // Customize the selected color
   },
   radioButtonText: {

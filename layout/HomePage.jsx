@@ -28,8 +28,8 @@ export default function HomePage({ route }) {
 
 
     useEffect(() => {
-        console.log('homescreen email:', email);
-        console.log('homescreen uid:', uid);
+        // console.log('homescreen email:', email);
+        // console.log('homescreen uid:', uid);
     }, []);
 
     const toSnakeCase = (str = '') => {
@@ -178,7 +178,7 @@ export default function HomePage({ route }) {
 
 
 
-                <TouchableOpacity className="absolute opacity-6 bottom-10 right-10 bg-sky-700 rounded-full w-16 h-16 flex justify-center items-center line-clamp-1 shadow" onPress={handleOpenModal}>
+                <TouchableOpacity className="absolute opacity-6 bottom-10 right-10 bg-sky-500 rounded-full w-16 h-16 flex justify-center items-center line-clamp-1 shadow" onPress={handleOpenModal}>
                     <Text className="text-4xl text-white">+</Text>
                 </TouchableOpacity>
             </View>

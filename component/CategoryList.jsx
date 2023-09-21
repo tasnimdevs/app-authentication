@@ -7,26 +7,24 @@ const CategoryList = ({ category, totalBalance, expenseList, totalExpense, incom
 
     const handleOpenForm = (e) => {
         setIsFormVisible(true);
-        console.log("list");
-
     };
 
-    console.log('list:', expenseList);
+    // console.log('list:', expenseList);
     return (
         <>
             <ScrollView className="bg-gray-300">
 
                 <View>
                     <View className="flex flex-row p-2 justify-between items-center">
-                        <Text className="text-3xl font-bold">{category.title}</Text>
-                        <Text className="text-3xl font-bold">Total Balance : {totalBalance}</Text>
+                        <Text className="text-2xl font-bold">{category.title}</Text>
+                        <Text className="text-xl font-bold">Total Balance : {totalBalance}</Text>
                     </View>
 
                     <View className="bg-gray-200 mt-3">
                         <View className="flex justify-between flex-row p-3">
-                            <Text className="text-2xl  font-bold">Title</Text>
+                            <Text className="text-xl  font-bold">Title</Text>
                             <Text className="text-xl  font-bold">Your Expense List</Text>
-                            <Text className="text-2xl  font-bold">Expense</Text>
+                            <Text className="text-xl  font-bold">Expense</Text>
                         </View>
                         <View>
                             {expenseList.map((expense, index) => (
