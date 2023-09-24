@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View } from 'react-native';
-import { db } from '../firebase'
-import { onValue, ref, set } from 'firebase/database'
+import { db } from '../firebase';
+import { onValue, ref, set } from 'firebase/database';
 import { v4 as uuidv4 } from 'uuid';
 import { useAppContext } from '../AppProvider';
 import CategoryList from './CategoryList';
@@ -15,9 +15,9 @@ const CategoryPage = ({ route }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [incomeList, setIncomeList] = useState([]);
   const [expenseList, setExpenseList] = useState([]);
+  const { updateTotalBalance } = useAppContext();
   const [totalExpense, setTotalExpense] = useState(0);
   const [totalIncome, setTotalIncome] = useState(0);
-  const { updateTotalBalance } = useAppContext();
 
   const totalBalance = totalIncome - totalExpense;
 
@@ -25,14 +25,23 @@ const CategoryPage = ({ route }) => {
     updateTotalBalance(totalBalance);
   }, [totalBalance, updateTotalBalance]);
 
-
   useEffect(() => {
     const categoryRef = ref(db, 'transaction');
     const onDataChange = (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        const incomeTransactions = Object.values(data).filter(transaction => transaction.categoryType === 'income' && transaction.categoryId === category.id && transaction.userId === category.userId);
-        const expenseTransactions = Object.values(data).filter(transaction => transaction.categoryType === 'expense' && transaction.categoryId === category.id && transaction.userId === category.userId);
+        const incomeTransactions = Object.values(data).filter(
+          (transaction) =>
+            transaction.categoryType === 'income' &&
+            transaction.categoryId === category.id &&
+            transaction.userId === category.userId
+        );
+        const expenseTransactions = Object.values(data).filter(
+          (transaction) =>
+            transaction.categoryType === 'expense' &&
+            transaction.categoryId === category.id &&
+            transaction.userId === category.userId
+        );
         setIncomeList(incomeTransactions);
         setExpenseList(expenseTransactions);
       }
@@ -43,8 +52,6 @@ const CategoryPage = ({ route }) => {
       categoryListener();
     };
   }, [category.id, category.userId]);
-  console.log('income:', incomeList);
-  console.log('expense:', expenseList);
 
   useEffect(() => {
     const total = expenseList.reduce((accumulator, currentExpense) => {
@@ -60,14 +67,13 @@ const CategoryPage = ({ route }) => {
     setTotalIncome(total);
   }, [incomeList]);
 
- 
-
   const handleCloseForm = () => {
+    setFormTitle('');
+    setFormAmount('');
     setIsFormVisible(false);
   };
 
   const handleSaveForm = () => {
-
     if (!selectedOption || !formTitle || !formAmount) return;
 
     if (selectedOption === 'income' || selectedOption === 'expense') {
@@ -89,13 +95,14 @@ const CategoryPage = ({ route }) => {
 
       set(ref(db, `transaction/${newTransaction.id}`), newTransaction);
     }
+    console.log(formTitle);
+    console.log(formAmount);
+
     // Clear form fields and reset state
     setFormTitle('');
     setFormAmount('');
     setSelectedOption(null);
     setIsFormVisible(false);
-
-
   };
 
   const options = [
@@ -103,11 +110,9 @@ const CategoryPage = ({ route }) => {
     { label: 'Expense', value: 'expense' },
   ];
 
-
-
   return (
     <>
-      <View className="flex-1 bg-orange-400 ">
+      <View style={{ flex: 1, backgroundColor: 'orange' }}>
         <CategoryList
           category={category}
           totalBalance={totalBalance}
@@ -118,7 +123,6 @@ const CategoryPage = ({ route }) => {
           setIsFormVisible={setIsFormVisible}
         />
       </View>
-
 
       <CategoryForm
         isFormVisible={isFormVisible}
@@ -134,6 +138,6 @@ const CategoryPage = ({ route }) => {
       />
     </>
   );
-
 };
+
 export default CategoryPage;

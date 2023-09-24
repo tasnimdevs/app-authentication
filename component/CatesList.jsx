@@ -21,13 +21,6 @@ const CatesList = ({ cate, index }) => {
     return cate.id;
   }
 
-
- /*  useEffect(() => {
-    // const specificTotalBalance = totalBalance[cate.id];
-    console.log('specificTotalBalance', getTotalBalance());
-  }) */
-
-
   return (
     <ScrollView>
       <View className="bg-white rounded-lg p-5 my-2 shadow flex-1">
@@ -37,8 +30,7 @@ const CatesList = ({ cate, index }) => {
         >
           <View className="flex justify-between flex-row">
             <Text className="text-2xl">{cate.title}</Text>
-            {/* Display totalBalance here */}
-            {/* <Text className="text-2xl">{getTotalBalance()}</Text> */}
+           
             <View className="text-2xl"><GetTotalBalance cateId={cate.id} /></View>
           </View>
         </TouchableOpacity>

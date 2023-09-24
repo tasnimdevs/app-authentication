@@ -27,11 +27,6 @@ export default function HomePage({ route }) {
     }, []);
 
 
-    useEffect(() => {
-        // console.log('homescreen email:', email);
-        // console.log('homescreen uid:', uid);
-    }, []);
-
     const toSnakeCase = (str = '') => {
         str = str.trim();
         const strArr = str.split(' ');
@@ -49,6 +44,7 @@ export default function HomePage({ route }) {
 
     const handleCloseModal = () => {
         setIsModalVisible(false);
+        setTextValue('')
     };
 
     const handleSaveModal = () => {
