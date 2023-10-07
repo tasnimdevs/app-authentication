@@ -19,6 +19,8 @@ const CategoryPage = ({ route }) => {
   const [totalExpense, setTotalExpense] = useState(0);
   const [totalIncome, setTotalIncome] = useState(0);
 
+  console.log(route);
+
   const totalBalance = totalIncome - totalExpense;
 
   useEffect(() => {

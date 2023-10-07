@@ -14,7 +14,7 @@ const LoginPage = ({ navigation, handleLogin }) => {
 
 
     return (
-        <View className="flex-1 items-center justify-center bg-slate-100">
+        <View className="flex-1 items-center justify-center bg-slate-200">
             <View className="space-y-4  w-1/2 items-center">
                 <View className="w-full ">
                     <TextInput
@@ -52,7 +52,7 @@ const LoginPage = ({ navigation, handleLogin }) => {
 
                     onPress={() => navigation.navigate('SignupPage')}
                 >
-                    <Text className="font-bold text-xl ">Create new account</Text>
+                    <Text className="font-bold text-l ">Create new account</Text>
                 </TouchableOpacity>
             </View>
 
